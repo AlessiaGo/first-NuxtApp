@@ -3,21 +3,48 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <section class="featured-posts">
-      <PostList />
-    </section>
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
 <script>
-import PostList from '../components/Posts/PostList.vue';
+import PostList from "@/components/Posts/PostList";
 
-export default{
-  components:{
-    PostList : PostList
-  }
-}
+export default {
+  components: {
+    PostList
+  },
+  asyncData(context, callback) {
+    setTimeout(() => {
+      callback(null, {
+        loadedPosts: [
+          {
+            id: "1",
+            title: "First Post",
+            previewText: "This is our first post!",
+            thumbnail:
+              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
+          },
+          {
+            id: "2",
+            title: "Second Post",
+            previewText: "This is our second post!",
+            thumbnail:
+              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
+          }
+        ]
+      });
+    }, 1500);
+  },
+  // data() {
+  //   return {
+  //     loadedPosts: []
+  //   };
+  // },
+  created() {}
+};
 </script>
+
 
 <style scoped>
 .intro {
@@ -25,7 +52,7 @@ export default{
   position: relative;
   padding: 30px;
   box-sizing: border-box;
-  background-image: url('../assets/images/main-page-background.jpg');
+  background-image: url("~assets/images/main-page-background.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -58,41 +85,5 @@ export default{
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-}
-
-.post-preview {
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 2px #ccc;
-  background-color: white;
-  width: 90%;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-@media (min-width: 850px) {
-  .post-preview {
-    width: 400px;
-    margin: 10px;
-  }
-}
-
-.post-thumbnail {
-  width: 100%;
-  height: 200px;
-  background-position: center;
-  background-size: cover;
-}
-
-.post-content {
-  padding: 10px;
-  text-align: center;
-}
-
-a:hover .post-content,
-a:active .post-content {
-  background-color: #ccc;
 }
 </style>
